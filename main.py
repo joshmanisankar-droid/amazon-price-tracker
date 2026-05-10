@@ -14,9 +14,15 @@ print(response.status_code)
 contents=response.text
 
 soup=BeautifulSoup(contents,"html.parser")
-price=float(soup.find(name="span",class_="a-price-whole").get_text().split(".")[0].replace(",",""))
-
-
+price_tag = soup.select_one(".a-price-whole")
+if price_tag:
+    price = float(
+        price_tag.get_text().replace(",", "")
+    )
+    print(price)
+else:
+    print("Price not found")
+    exit()
 title=soup.find(name="span",id="productTitle",class_="a-size-large product-title-word-break").get_text()
 
 BUY_PRICE=2000
